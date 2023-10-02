@@ -16,6 +16,7 @@ const Header = () => {
   const {
     state: { cart },
     dispatch,
+    productDispatch,
   } = CartState();
   return (
     <>
@@ -31,6 +32,12 @@ const Header = () => {
                 <FormControl
                   style={{ width: "100%", maxWidth: "500px", margin: "0 auto" }}
                   placeholder="Search a product..."
+                  onChange={(e) =>
+                    productDispatch({
+                      type: "FILTER_BY_SEARCH",
+                      payload: e.target.value,
+                    })
+                  }
                 />
               </Nav.Link>
             </Nav>
@@ -69,7 +76,7 @@ const Header = () => {
                         </span>
                       ))}
                       <Link to="/cart">
-                        <Button style={{ width: "95%", margin: "0 10px"}}>
+                        <Button style={{ width: "95%", margin: "0 10px" }}>
                           Go To Cart
                         </Button>
                       </Link>
