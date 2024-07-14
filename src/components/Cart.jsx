@@ -1,22 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { CartState } from "../context/Context";
 import { Button, Col, ListGroup, Row, Form, Image } from "react-bootstrap";
-import { useEffect } from "react";
 import Rating from "./Rating";
 import { AiFillDelete } from "react-icons/ai";
+
 const Cart = () => {
+  const navigate = useNavigate();
+
   const {
     state: { cart },
     dispatch,
   } = CartState();
 
   const [total, setTotal] = useState();
+  const [checkoutConfirmed, setCheckoutConfirmed] = useState(false);
 
   useEffect(() => {
     setTotal(
       cart.reduce((acc, curr) => acc + Number(curr.price) * curr.qty, 0)
     );
   }, [cart]);
+
+  const handleCheckout = () => {
+    dispatch({ type: "CLEAR_CART" });
+    setTotal(0);
+    setCheckoutConfirmed(true);
+
+    setTimeout(() => {
+      navigate("/");
+    }, 5000);
+  };
+
   return (
     <div className="home">
       <div className="productContainer">
@@ -77,10 +92,17 @@ const Cart = () => {
       <div className="filters summary">
         <span className="title">Subtotal ({cart.length}) items</span>
         <span style={{ fontWeight: 700, fontSize: 20 }}>Total $ {total}</span>
-        <Button type="button" disabled={cart.length === 0}>
+        <Button type="button" disabled={cart.length === 0} onClick={handleCheckout}>
           Proceed to Checkout
         </Button>
       </div>
+      {checkoutConfirmed && (
+        <div className="checkout-confirmation">
+          <div className="confirmation-message">
+            Thanks for visiting Shopping Mart! Checkout is under progress...
+          </div>
+        </div>
+      )}
     </div>
   );
 };

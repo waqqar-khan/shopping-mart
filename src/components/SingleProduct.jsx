@@ -1,7 +1,7 @@
 import { Button, Card } from "react-bootstrap";
 import Rating from "./Rating";
 import { CartState } from "../context/Context";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 
 const SingleProduct = ({ prod }) => {
   const {
@@ -49,11 +49,7 @@ const SingleProduct = ({ prod }) => {
   );
 };
 
-/*
-The warnings appearing about missing props validation in your 
-SingleProduct component can be resolved by 
-adding PropTypes validation for the prod prop.
-*/
+
 SingleProduct.propTypes = {
   prod: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -63,7 +59,6 @@ SingleProduct.propTypes = {
     fastDelivery: PropTypes.bool.isRequired,
     ratings: PropTypes.number.isRequired,
     inStock: PropTypes.number.isRequired,
-    // Add more PropTypes for other properties as needed
   }).isRequired,
 };
 

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Container,
   Navbar,
@@ -18,11 +19,23 @@ const Header = () => {
     dispatch,
     productDispatch,
   } = CartState();
+
+  const [cartCount, setCartCount] = useState(cart.length);
+
+  useEffect(() => {
+    setCartCount(cart.length);
+  }, [cart]);
+
+  const handleClearCart = () => {
+    dispatch({ type: "CLEAR_CART" });
+    setCartCount(0);
+  };
+
   return (
     <>
       <Navbar bg="primary" style={{ minHeight: 80 }}>
         <Container>
-          <Navbar.Brand style={{ color: "yellow", fontSize: 30 }}>
+          <Navbar.Brand style={{ color: "#FFC107", fontSize: 30 }}>
             <Link to="/">Shopping Mart</Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -43,9 +56,9 @@ const Header = () => {
             </Nav>
             <Nav>
               <Dropdown>
-                <Dropdown.Toggle variant="success">
+                <Dropdown.Toggle variant="warning">
                   <FaShoppingCart color="white" fontSize="25px" />
-                  <Badge>{cart.length}</Badge>
+                  <Badge>{cartCount}</Badge>
                 </Dropdown.Toggle>
                 <Dropdown.Menu
                   style={{ minWidth: "fit-content", maxWidth: "100vw" }}
@@ -55,13 +68,13 @@ const Header = () => {
                       {cart.map((prod) => (
                         <span className="cartItem" key={prod.id}>
                           <img
-                            src={prod.img}
+                            src={prod.image}
                             className="cartItemImage"
                             alt={prod.name}
                           />
                           <div className="cartItemDetail">
                             <span>{prod.name}</span>
-                            <span>$ {prod.price.split(".")[0]}</span>
+                            <span>$ {prod.price}</span>
                           </div>
                           <AiFillDelete
                             fontSize="20px"
@@ -76,7 +89,10 @@ const Header = () => {
                         </span>
                       ))}
                       <Link to="/cart">
-                        <Button style={{ width: "95%", margin: "0 10px" }}>
+                        <Button
+                          style={{ width: "95%", margin: "0 10px" }}
+                          onClick={handleClearCart}
+                        >
                           Go To Cart
                         </Button>
                       </Link>
