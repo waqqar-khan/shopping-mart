@@ -26,11 +26,6 @@ const Header = () => {
     setCartCount(cart.length);
   }, [cart]);
 
-  const handleClearCart = () => {
-    dispatch({ type: "CLEAR_CART" });
-    setCartCount(0);
-  };
-
   return (
     <>
       <Navbar bg="primary" style={{ minHeight: 80 }}>
@@ -91,7 +86,6 @@ const Header = () => {
                       <Link to="/cart">
                         <Button
                           style={{ width: "95%", margin: "0 10px" }}
-                          onClick={handleClearCart}
                         >
                           Go To Cart
                         </Button>

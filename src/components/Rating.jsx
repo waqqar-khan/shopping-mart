@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const Rating = ({ rating, onClick, style }) => {
@@ -14,6 +15,12 @@ const Rating = ({ rating, onClick, style }) => {
       ))}
     </>
   );
+};
+
+Rating.propTypes = {
+  rating: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
+  style: PropTypes.object,
 };
 
 export default Rating;
