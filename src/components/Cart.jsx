@@ -7,27 +7,22 @@ import { AiFillDelete } from "react-icons/ai";
 
 const Cart = () => {
   const navigate = useNavigate();
-
-  const {
-    state: { cart },
-    dispatch,
-  } = CartState();
-
-  const [total, setTotal] = useState();
+  const { state: { cart }, dispatch } = CartState();
+  const [total, setTotal] = useState(0);
   const [checkoutConfirmed, setCheckoutConfirmed] = useState(false);
 
   useEffect(() => {
-    setTotal(
-      cart.reduce((acc, curr) => acc + Number(curr.price) * curr.qty, 0)
-    );
+    setTotal(cart.reduce((acc, curr) => acc + Number(curr.price) * curr.qty, 0));
   }, [cart]);
 
   const handleCheckout = () => {
     dispatch({ type: "CLEAR_CART" });
+
     setTotal(0);
     setCheckoutConfirmed(true);
 
     setTimeout(() => {
+      setCheckoutConfirmed(false);
       navigate("/");
     }, 5000);
   };

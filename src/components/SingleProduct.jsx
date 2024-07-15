@@ -9,6 +9,16 @@ const SingleProduct = ({ prod }) => {
     dispatch,
   } = CartState();
 
+  const isInCart = cart.some((p) => p.id === prod.id);
+
+  const handleAddToCart = () => {
+    dispatch({ type: "ADD_TO_CART", payload: prod });
+  };
+
+  const handleRemoveFromCart = () => {
+    dispatch({ type: "REMOVE_FROM_CART", payload: prod });
+  };
+
   return (
     <div className="products">
       <Card>
@@ -24,20 +34,16 @@ const SingleProduct = ({ prod }) => {
             )}
             <Rating rating={prod.ratings} />
           </Card.Subtitle>
-          {cart.some((p) => p.id === prod.id) ? (
+          {isInCart ? (
             <Button
-              onClick={() => {
-                dispatch({ type: "REMOVE_FROM_CART", payload: prod });
-              }}
+              onClick={handleRemoveFromCart}
               variant="danger"
             >
               Remove from Cart
             </Button>
           ) : (
             <Button
-              onClick={() => {
-                dispatch({ type: "ADD_TO_CART", payload: prod });
-              }}
+              onClick={handleAddToCart}
               disabled={!prod.inStock}
             >
               {!prod.inStock ? "Out of Stock" : "Add to Cart"}
@@ -48,7 +54,6 @@ const SingleProduct = ({ prod }) => {
     </div>
   );
 };
-
 
 SingleProduct.propTypes = {
   prod: PropTypes.shape({
