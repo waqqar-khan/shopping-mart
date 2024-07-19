@@ -28,8 +28,8 @@ const Header = () => {
 
   return (
     <>
-      <Navbar bg="primary" style={{ minHeight: 80 }}>
-        <Container>
+      <Navbar bg="primary" expand="lg" style={{ minHeight: 80 }} className="navbar-fixed-top">
+        <Container fluid>
           <Navbar.Brand style={{ color: "#FFC107", fontSize: 30 }}>
             <Link to="/">Shopping Mart</Link>
           </Navbar.Brand>
@@ -50,18 +50,22 @@ const Header = () => {
               </Nav.Link>
             </Nav>
             <Nav>
-              <Dropdown>
-                <Dropdown.Toggle variant="warning">
+              <Dropdown drop="end">
+                <Dropdown.Toggle variant="warning" id="cart-dropdown">
                   <FaShoppingCart color="white" fontSize="25px" />
                   <Badge>{cartCount}</Badge>
                 </Dropdown.Toggle>
                 <Dropdown.Menu
-                  style={{ minWidth: "fit-content", maxWidth: "100vw" }}
+                  style={{
+                    minWidth: "auto",
+                    right: 0,
+                    left: "auto",
+                  }}
                 >
                   {cart.length > 0 ? (
                     <>
                       {cart.map((prod) => (
-                        <span className="cartItem" key={prod.id}>
+                        <Dropdown.Item key={prod.id}>
                           <img
                             src={prod.image}
                             className="cartItemImage"
@@ -81,20 +85,19 @@ const Header = () => {
                               })
                             }
                           />
-                        </span>
+                        </Dropdown.Item>
                       ))}
-                      <Link to="/cart">
-                        <Button
-                          style={{ width: "95%", margin: "0 10px" }}
-                        >
-                          Go To Cart
-                        </Button>
-                      </Link>
+                      <Dropdown.Divider />
+                      <Dropdown.Item>
+                        <Link to="/cart" style={{ textDecoration: "none" }}>
+                          <Button style={{ width: "100%" }}>Go To Cart</Button>
+                        </Link>
+                      </Dropdown.Item>
                     </>
                   ) : (
-                    <span style={{ padding: 10, whiteSpace: "nowrap" }}>
+                    <Dropdown.Item style={{ padding: "10px", whiteSpace: "nowrap" }}>
                       Cart is Empty!
-                    </span>
+                    </Dropdown.Item>
                   )}
                 </Dropdown.Menu>
               </Dropdown>
